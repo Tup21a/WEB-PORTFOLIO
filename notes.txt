@@ -1,0 +1,13 @@
+Tupac:
+1. Install proper terminal:
+    -invest max 30m
+    -install bash shell
+    -connect to vscode
+
+2. tick tack toe: TYPESCRIPT
+
+
+Jonas:
+-choose and setup technologies
+
+*fri 4 april
