@@ -1,3 +1,23 @@
+07.04.2025
+    Tupac:
+1. add npm_modules and all other necessary files/repositories to .gitignore
+2. play around with vue.js quickstart guide
+3. commit all interesting stuff on a new branch and push it
+4. prepare lots of questions
+5. tick tack toe in typescript
+Topics to learn:
+    -gitignore
+
+
+
+    Jonas:
+1. setup project and install npm
+2. prepare ideas for how to continue
+
+
+
+* Fri 4th April
+
 Tupac:
 1. Install proper terminal:
     -invest max 30m
@@ -10,4 +30,4 @@ Tupac:
 Jonas:
 -choose and setup technologies
 
-*fri 4 april
+
