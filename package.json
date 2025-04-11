@@ -1,0 +1,26 @@
+{
+  "name": "web-portfolio",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "ts-node src/ticTacToe.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tup21a/WEB-PORTFOLIO.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tup21a/WEB-PORTFOLIO/issues"
+  },
+  "homepage": "https://github.com/Tup21a/WEB-PORTFOLIO#readme",
+  "description": "",
+  "devDependencies": {
+    "@types/node": "^22.14.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
+}
