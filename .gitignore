@@ -1,0 +1,19 @@
+# node_modules es pesado y se regenera con npm install
+node_modules/
+
+# Archivos generados por TypeScript (JS compilado)
+*.js
+
+# Archivos de lock para trackear cambios menores (opcional)
+package-lock.json
+
+# Archivos temporales del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Archivos de entorno (por si los usás después)
+.env
+
+# Caché de Vue / Vite
+dist/
+.vite/
