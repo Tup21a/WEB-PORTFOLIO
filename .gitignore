@@ -1,3 +1,5 @@
+.idea
+
 # node_modules es pesado y se regenera con npm install
 node_modules/
 
@@ -17,3 +19,5 @@ Thumbs.db
 # Caché de Vue / Vite
 dist/
 .vite/
+
+
