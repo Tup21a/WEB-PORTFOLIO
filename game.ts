@@ -1,119 +1,115 @@
-// ejecutar con npx tsc game.ts && node game.js
+import * as readlineSync from 'readline-sync';
 
-type PlayerSymbol = 'X' | 'O' | ' ';
-type Board = PlayerSymbol[][];
+type Board = string[][];
 
-const readline = require('readline-sync');
-
-function draw(board: Board): void {
-  console.log('\n');
-  board.forEach(row => {
-    console.log(row.map(cell => cell || ' ').join(' | '));
-    console.log('---------');
-  });
+function draw(game: Board): void {
+    game.forEach(row => console.log(row.join(' | ')));
 }
 
-function updateBoard(board: Board, row: number, col: number, symbol: PlayerSymbol): void {
-  board[row][col] = symbol;
+function updateBoard(game: Board, row: number, col: number, symbol: string): void {
+    game[row][col] = symbol;
 }
 
-function getValidInput(board: Board): [number, number] {
-  while (true) {
-    const input = readline.question("Ingrese x, y (ej. 0,1): ");
-    const [rowStr, colStr] = input.replace(",", " ").split(" ");
+function getValidInput(game: Board): [number, number] {
+    while (true) {
+        const input = readlineSync.question('Ingrese x, y: ').replace(',', ' ').split(' ').map(Number);
 
-    const row = parseInt(rowStr);
-    const col = parseInt(colStr);
+        if (input.length !== 2 || input.some(isNaN)) {
+            console.log("Ingrese números válidos separados por una coma ',' o espacio ' '");
+            continue;
+        }
 
-    if (
-      !isNaN(row) && !isNaN(col) &&
-      row >= 0 && row <= 2 &&
-      col >= 0 && col <= 2
-    ) {
-      if (board[row][col] !== ' ') {
-        console.log("Esa posición ya está ocupada, ingrese otra!");
-      } else {
+        const [row, col] = input;
+        const isValidPosition = row >= 0 && row <= 2 && col >= 0 && col <= 2;
+
+        if (!isValidPosition) {
+            console.log('Ingrese una posición válida entre 0 y 2');
+            continue;
+        }
+
+        if (game[row][col] !== ' ') {
+            console.log('Esa posición ya está ocupada, ingrese otra!');
+            continue;
+        }
+
         return [row, col];
-      }
-    } else {
-      console.log("Ingrese una posición válida entre 0 y 2, separada por coma o espacio.");
     }
-  }
 }
 
-function hasWinner(board: Board, symbol: PlayerSymbol): boolean {
-  const lines = [
-    ...board, // filas
-    ...[0, 1, 2].map(i => board.map(row => row[i])), // columnas
-    board.map((row, i) => row[i]), // diagonal principal
-    board.map((row, i) => row[2 - i]) // diagonal secundaria
-  ];
+function winner(game: Board, symbol: string): boolean {
+    const rows = game;
+    const cols = Array.from({ length: 3 }, (_, i) => game.map(row => row[i]));
+    const diags = [
+        game.map((row, i) => row[i]),
+        game.map((row, i) => row[2 - i])
+    ];
+    const lines = [...rows, ...cols, ...diags];
 
-  return lines.some(line =>
-    Array.isArray(line)
-      ? line.every(cell => cell === symbol)
-      : false
-  );
+    return lines.some(line => line.every(cell => cell === symbol));
 }
 
-function playUser(board: Board): boolean {
-  const [row, col] = getValidInput(board);
-  updateBoard(board, row, col, 'X');
-  if (hasWinner(board, 'X')) {
-    draw(board);
-    console.log('\t\tGanaste "X" !!!');
-    return true;
-  }
-  return false;
-}
+function playUser(game: Board): boolean {
+    const [row, col] = getValidInput(game);
+    updateBoard(game, row, col, 'x');
 
-function playComputer(board: Board): boolean {
-  while (true) {
-    const row = Math.floor(Math.random() * 3);
-    const col = Math.floor(Math.random() * 3);
-
-    if (board[row][col] === ' ') {
-      updateBoard(board, row, col, 'O');
-      console.log(`La Computadora juega: ${row}, ${col}`);
-      if (hasWinner(board, 'O')) {
-        draw(board);
-        console.log('\t\tPerdiste !!, ganó "O"');
+    if (winner(game, 'x')) {
+        draw(game);
+        console.log('\t\t Ganaste "x" !!!');
         return true;
-      }
-      return false;
     }
-  }
+    return false;
 }
 
-function createEmptyBoard(): Board {
-  return Array.from({ length: 3 }, () => Array(3).fill(' '));
+function playComputer(game: Board): boolean {
+    while (true) {
+        const row = Math.floor(Math.random() * 3);
+        const col = Math.floor(Math.random() * 3);
+
+        if (game[row][col] === ' ') {
+            updateBoard(game, row, col, 'o');
+            console.log(`La Computadora juega: ${row}, ${col}`);
+
+            if (winner(game, 'o')) {
+                draw(game);
+                console.log('\t\t Perdiste !!, ganó "o"');
+                return true;
+            }
+            return false;
+        }
+    }
 }
 
-function startGame(): void {
-  console.log('\tNuevo Juego');
-  const board = createEmptyBoard();
-  let turn = Math.round(Math.random());
+function start(): void {
+    console.log('\t Nuevo Juego');
+    const game: Board = Array.from({ length: 3 }, () => Array(3).fill(' '));
+    let userTurn = Math.round(Math.random());
 
-  draw(board);
+    draw(game);
 
-  for (let i = 0; i < 9; i++) {
-    const gameOver = turn === 1 ? playUser(board) : playComputer(board);
-    if (gameOver) return;
+    for (let i = 0; i < 9; i++) {
+        const currentPlayerWon = userTurn
+            ? playUser(game)
+            : playComputer(game);
 
-    draw(board);
-    turn = 1 - turn;
-  }
+        if (currentPlayerWon) {
+            return;
+        }
 
-  console.log("EMPATE !!");
+        userTurn = 1 - userTurn;
+        draw(game);
+    }
+
+    console.log('EMPATE !!');
 }
 
 function main(): void {
-  while (true) {
-    startGame();
-    const playAgain = readline.question("Desea iniciar un nuevo juego? (s/n): ").toLowerCase();
-    if (playAgain !== 's') break;
-    console.clear();
-  }
+    while (true) {
+        start();
+        const again = readlineSync.question('Desea iniciar un nuevo juego? (s/n): ').toLowerCase();
+        if (again !== 's') {
+            break;
+        }
+    }
 }
 
 main();
