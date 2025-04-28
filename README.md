@@ -2,7 +2,6 @@
 
 A web portfolio project featuring a TypeScript implementation of Tic-Tac-Toe (Tres en Raya).
 
-
 ## Getting Started
 
 ### Prerequisites
