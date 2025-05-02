@@ -1,3 +1,15 @@
+02.05.2025
+-install JetBrains Toolbox
+-with toolbox, get WebStorm
+-configure it to use your local typescript installation
+-set up a vue.js project:
+    -open the very same project, just in Cursor
+    -use the ai-agent and ask him to create a web-page where you can play ticktacktoe
+    -you will get many problem. See how far you can come in solving some of them
+    -create a branch, upload it
+    -formulate a set of questions (e.g. ... is breaking; I get an error here; how can I fix this ... issue) and send them to me
+    -goal: (I don't expect you to reach it) a webpage (on localhost) where one can play ticktacktoe
+
 
 11.04.2025
     Tupac
