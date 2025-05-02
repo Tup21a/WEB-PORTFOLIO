@@ -1,2 +1,15 @@
 .idea
-node_modules
+
+node_modules/
+
+*.js
+
+package-lock.json
+
+.DS_Store
+Thumbs.db
+
+.env
+
+dist/
+.vite/
